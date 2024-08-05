@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/newdrive/compiler_assisted
+CMAKE_SOURCE_DIR = /home/cc/compiler_assisted
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/newdrive/compiler_assisted/build
+CMAKE_BINARY_DIR = /home/cc/compiler_assisted/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,9 +126,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles /mnt/newdrive/compiler_assisted/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/compiler_assisted/build/CMakeFiles /home/cc/compiler_assisted/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/compiler_assisted/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -155,45 +155,6 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
-
-#=============================================================================
-# Target rules for targets named install-RuntimeAddrPass-stripped
-
-# Build rule for target.
-install-RuntimeAddrPass-stripped: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 install-RuntimeAddrPass-stripped
-.PHONY : install-RuntimeAddrPass-stripped
-
-# fast build rule for target.
-install-RuntimeAddrPass-stripped/fast:
-	$(MAKE) -f CMakeFiles/install-RuntimeAddrPass-stripped.dir/build.make CMakeFiles/install-RuntimeAddrPass-stripped.dir/build
-.PHONY : install-RuntimeAddrPass-stripped/fast
-
-#=============================================================================
-# Target rules for targets named install-RuntimeAddrPass
-
-# Build rule for target.
-install-RuntimeAddrPass: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 install-RuntimeAddrPass
-.PHONY : install-RuntimeAddrPass
-
-# fast build rule for target.
-install-RuntimeAddrPass/fast:
-	$(MAKE) -f CMakeFiles/install-RuntimeAddrPass.dir/build.make CMakeFiles/install-RuntimeAddrPass.dir/build
-.PHONY : install-RuntimeAddrPass/fast
-
-#=============================================================================
-# Target rules for targets named RuntimeAddrPass
-
-# Build rule for target.
-RuntimeAddrPass: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 RuntimeAddrPass
-.PHONY : RuntimeAddrPass
-
-# fast build rule for target.
-RuntimeAddrPass/fast:
-	$(MAKE) -f CMakeFiles/RuntimeAddrPass.dir/build.make CMakeFiles/RuntimeAddrPass.dir/build
-.PHONY : RuntimeAddrPass/fast
 
 #=============================================================================
 # Target rules for targets named RISCVTargetParserTableGen
@@ -247,32 +208,44 @@ intrinsics_gen/fast:
 	$(MAKE) -f CMakeFiles/intrinsics_gen.dir/build.make CMakeFiles/intrinsics_gen.dir/build
 .PHONY : intrinsics_gen/fast
 
-RuntimeAddr.o: RuntimeAddr.cpp.o
+#=============================================================================
+# Target rules for targets named install-RuntimeAddrPass-stripped
 
-.PHONY : RuntimeAddr.o
+# Build rule for target.
+install-RuntimeAddrPass-stripped: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 install-RuntimeAddrPass-stripped
+.PHONY : install-RuntimeAddrPass-stripped
 
-# target to build an object file
-RuntimeAddr.cpp.o:
-	$(MAKE) -f CMakeFiles/RuntimeAddrPass.dir/build.make CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.o
-.PHONY : RuntimeAddr.cpp.o
+# fast build rule for target.
+install-RuntimeAddrPass-stripped/fast:
+	$(MAKE) -f passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build.make passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build
+.PHONY : install-RuntimeAddrPass-stripped/fast
 
-RuntimeAddr.i: RuntimeAddr.cpp.i
+#=============================================================================
+# Target rules for targets named install-RuntimeAddrPass
 
-.PHONY : RuntimeAddr.i
+# Build rule for target.
+install-RuntimeAddrPass: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 install-RuntimeAddrPass
+.PHONY : install-RuntimeAddrPass
 
-# target to preprocess a source file
-RuntimeAddr.cpp.i:
-	$(MAKE) -f CMakeFiles/RuntimeAddrPass.dir/build.make CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.i
-.PHONY : RuntimeAddr.cpp.i
+# fast build rule for target.
+install-RuntimeAddrPass/fast:
+	$(MAKE) -f passes/CMakeFiles/install-RuntimeAddrPass.dir/build.make passes/CMakeFiles/install-RuntimeAddrPass.dir/build
+.PHONY : install-RuntimeAddrPass/fast
 
-RuntimeAddr.s: RuntimeAddr.cpp.s
+#=============================================================================
+# Target rules for targets named RuntimeAddrPass
 
-.PHONY : RuntimeAddr.s
+# Build rule for target.
+RuntimeAddrPass: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RuntimeAddrPass
+.PHONY : RuntimeAddrPass
 
-# target to generate assembly for a file
-RuntimeAddr.cpp.s:
-	$(MAKE) -f CMakeFiles/RuntimeAddrPass.dir/build.make CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.s
-.PHONY : RuntimeAddr.cpp.s
+# fast build rule for target.
+RuntimeAddrPass/fast:
+	$(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/build
+.PHONY : RuntimeAddrPass/fast
 
 # Help Target
 help:
@@ -281,21 +254,18 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/local"
-	@echo "... install-RuntimeAddrPass-stripped"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... install-RuntimeAddrPass"
-	@echo "... RuntimeAddrPass"
 	@echo "... RISCVTargetParserTableGen"
 	@echo "... acc_gen"
 	@echo "... edit_cache"
 	@echo "... omp_gen"
 	@echo "... install/strip"
 	@echo "... intrinsics_gen"
-	@echo "... RuntimeAddr.o"
-	@echo "... RuntimeAddr.i"
-	@echo "... RuntimeAddr.s"
+	@echo "... install-RuntimeAddrPass-stripped"
+	@echo "... install-RuntimeAddrPass"
+	@echo "... RuntimeAddrPass"
 .PHONY : help
 
 

@@ -14,7 +14,9 @@ static dev_t dev_number;
 static struct cdev my_cdev;
 static struct class *my_class = NULL;
 extern char *intercepted_addr_buffer; // Memory to be mapped
-extern int *intercepted_addr_buffer_size;
+extern int *intercepted_addr_buffer_idx;
+extern unsigned long intercepted_addr_buffer_capacity;
+extern bool *buffer_is_ready;
 
 // EXPORT_SYMBOL(intercepted_addr_buffer);  // Export the device buffer for use in other parts of the kernel
 
@@ -63,7 +65,7 @@ static struct file_operations fops = {
 static int __init my_init(void)
 {
     int result;
-    
+
     // Allocate a device number
     result = alloc_chrdev_region(&dev_number, 0, 1, DEVICE_NAME);
     if (result < 0)
@@ -95,8 +97,6 @@ static int __init my_init(void)
     // Create device node
     device_create(my_class, NULL, dev_number, NULL, DEVICE_NAME);
 
-    // Allocate memory for the device
-    // intercepted_addr_buffer = kzalloc(DEVICE_SIZE, GFP_KERNEL);
     intercepted_addr_buffer = kmalloc(DEVICE_SIZE, GFP_KERNEL);
     if (!intercepted_addr_buffer)
     {
@@ -107,7 +107,11 @@ static int __init my_init(void)
         return -ENOMEM;
     }
     memset(intercepted_addr_buffer, 0, DEVICE_SIZE);
-    intercepted_addr_buffer_size = (int *)((char *)intercepted_addr_buffer + DEVICE_SIZE - sizeof(int));
+    intercepted_addr_buffer_idx = (int *)((char *)intercepted_addr_buffer + DEVICE_SIZE - sizeof(int));
+    *intercepted_addr_buffer_idx = 0;
+    buffer_is_ready = (bool *)((char *)intercepted_addr_buffer + DEVICE_SIZE - sizeof(int) - sizeof(bool));
+    *buffer_is_ready = false;
+    intercepted_addr_buffer_capacity = DEVICE_SIZE;
 
     printk(KERN_INFO "Device %s initialized with major number %d\n", DEVICE_NAME, MAJOR(dev_number));
 

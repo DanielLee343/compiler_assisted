@@ -1,32 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/mman.h>
-#include <string.h>
-#include <err.h>
-#include <sys/wait.h>
-#include <time.h>
 #include "shared_header.h"
-extern int *buffer_size;
-// extern unsigned long *shared_mem;
-long shared_mem_start(pid_t pid)
-{
-    return syscall(syscall_shared_mem_start, pid);
-}
 
-long shared_mem_end()
-{
-    return syscall(syscall_shared_mem_end);
-}
+extern void populate_shared_mem(void *addr, int size);
 
+void launch_bench();
 int main(int argc, char **argv)
 {
-    pid_t pid;
     int state;
     int fd;
-    int parent_pid = getpid();
-    printf("parent pid: %d\n", parent_pid);
 
     fd = open(DEVICE_PATH, O_RDWR);
     if (fd < 0)
@@ -42,24 +22,33 @@ int main(int argc, char **argv)
         close(fd);
         return EXIT_FAILURE;
     }
-    buffer_size = (int *)((char *)shared_mem + BUFFER_SIZE - sizeof(int));
+    buffer_index = (int *)((char *)shared_mem + BUFFER_SIZE - sizeof(int));
+    buffer_is_ready = (bool *)((char *)shared_mem + BUFFER_SIZE - sizeof(int) - sizeof(bool));
+    *buffer_index = 0;
+    *buffer_is_ready = false;
 
-    shared_mem_start(parent_pid);
+    int pid = getpid();
+    printf("parent pid: %d\n", pid);
+    shared_mem_start(pid);
     // execvp(argv[1], &argv[1]);
-    {
-        int *a_mem = malloc(8 * sizeof(int));
-        for (int i = 0; i < 8; i++)
-        {
-            a_mem[i] = i * 123;
-            printf("runtime addr: %p\n", &a_mem[i]);
-            usleep(250 * 1000);
-        }
-    }
+    launch_bench(); // benchmark entry
 
-    // simulate some workload
+    shared_mem_end();
     munmap(shared_mem, BUFFER_SIZE); // Unmap before exiting
     close(fd);
-    shared_mem_end();
-    return EXIT_SUCCESS;
     return 0;
+}
+
+void launch_bench()
+{
+    int *a_mem = malloc(8 * sizeof(int));
+    for (int i = 0; i < 100; i++)
+    {
+        // printf("i's address: %p\n", &i);
+        // populate_shared_mem(&a_mem[i], sizeof(int));
+        // printf("buffer_index: %d\n", *buffer_index);
+        a_mem[i] = i * 123;
+        // printf("runtime addr: %p\n", &a_mem[i]);
+        usleep(50 * 1000);
+    }
 }

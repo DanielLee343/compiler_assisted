@@ -30,7 +30,9 @@ __used __section("__versions") = {
 	{ 0x4114c0ec, "module_layout" },
 	{ 0x37a0cba, "kfree" },
 	{ 0x6cdd27b2, "device_destroy" },
-	{ 0x20a89958, "intercepted_addr_buffer_size" },
+	{ 0x50745143, "intercepted_addr_buffer_capacity" },
+	{ 0xcb8a6846, "intercepted_addr_buffer_idx" },
+	{ 0x72b88987, "buffer_is_ready" },
 	{ 0xdc2ec05e, "class_destroy" },
 	{ 0x35589975, "kmem_cache_alloc_trace" },
 	{ 0x420150eb, "kmalloc_caches" },
@@ -52,4 +54,4 @@ __used __section("__versions") = {
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "56E3F020FF44CB8E7A2A24A");
+MODULE_INFO(srcversion, "4811D85975122BC26806EAF");

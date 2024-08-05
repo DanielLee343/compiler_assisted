@@ -4,6 +4,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdbool.h>
 #include <sys/syscall.h>
 #include <linux/unistd.h>
 
@@ -28,8 +29,9 @@ long shared_mem_end()
 int main()
 {
     int fd;
-    char *mapped_mem;
-    int *buffer_size;
+    unsigned long *mapped_mem;
+    int *buffer_index;
+    bool *buffer_is_ready;
     int pid = getpid();
     shared_mem_start(pid);
 
@@ -42,17 +44,16 @@ int main()
     }
 
     // Memory-map the device
-    mapped_mem = mmap(NULL, DEVICE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    mapped_mem = (unsigned long *)mmap(NULL, DEVICE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (mapped_mem == MAP_FAILED)
     {
         perror("Failed to mmap device");
         close(fd);
         return EXIT_FAILURE;
     }
-    buffer_size = (int *)((char *)mapped_mem + DEVICE_SIZE - sizeof(int));
+    buffer_index = (int *)((char *)mapped_mem + DEVICE_SIZE - sizeof(int));
+    buffer_is_ready = (bool *)((char *)mapped_mem + DEVICE_SIZE - sizeof(int) - sizeof(bool));
 
-    // Write data to the mapped memory
-    // strcpy(mapped_mem, "Hello");
     unsigned long addresses_1[NUM_ADDRESSES] = {
         0x11111111, 0x22222222, 0x33333333, 0x44444444, 0x55555555,
         0x66666666, 0x77777777, 0x88888888, 0x99999999, 0x0};
@@ -65,9 +66,10 @@ int main()
             memcpy(mapped_mem, addresses_1, sizeof(addresses_1));
         else
             memcpy(mapped_mem, addresses_2, sizeof(addresses_2));
-        *buffer_size = 10;
+        *buffer_index = 10;
         usleep(500 * 1000);
-        printf("buffer_size: %d\n", *buffer_size);
+        *buffer_is_ready = true;
+        printf("buffer_size: %d\n", *buffer_index);
     }
     // syscall(SYS_read_device_memory);
 
