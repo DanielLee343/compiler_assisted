@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cc/compiler_assisted
+CMAKE_SOURCE_DIR = /mnt/newdrive/compiler_assisted
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cc/compiler_assisted/build
+CMAKE_BINARY_DIR = /mnt/newdrive/compiler_assisted/build
 
 # Utility rule file for acc_gen.
 
@@ -67,6 +67,6 @@ CMakeFiles/acc_gen.dir/clean:
 .PHONY : CMakeFiles/acc_gen.dir/clean
 
 CMakeFiles/acc_gen.dir/depend:
-	cd /home/cc/compiler_assisted/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cc/compiler_assisted /home/cc/compiler_assisted /home/cc/compiler_assisted/build /home/cc/compiler_assisted/build /home/cc/compiler_assisted/build/CMakeFiles/acc_gen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /mnt/newdrive/compiler_assisted/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/newdrive/compiler_assisted /mnt/newdrive/compiler_assisted /mnt/newdrive/compiler_assisted/build /mnt/newdrive/compiler_assisted/build /mnt/newdrive/compiler_assisted/build/CMakeFiles/acc_gen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/acc_gen.dir/depend
 

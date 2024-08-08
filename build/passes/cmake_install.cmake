@@ -1,4 +1,4 @@
-# Install script for directory: /home/cc/compiler_assisted/passes
+# Install script for directory: /mnt/newdrive/compiler_assisted/passes
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimeAddrPassx" OR NOT CMAKE_INST
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/RuntimeAddrPass.so"
          RPATH "$ORIGIN/../lib")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE MODULE FILES "/home/cc/compiler_assisted/build/passes/RuntimeAddrPass.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE MODULE FILES "/mnt/newdrive/compiler_assisted/build/passes/RuntimeAddrPass.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/RuntimeAddrPass.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/RuntimeAddrPass.so")
     file(RPATH_CHANGE

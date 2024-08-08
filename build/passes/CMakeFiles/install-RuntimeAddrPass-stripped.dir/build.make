@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cc/compiler_assisted
+CMAKE_SOURCE_DIR = /mnt/newdrive/compiler_assisted
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cc/compiler_assisted/build
+CMAKE_BINARY_DIR = /mnt/newdrive/compiler_assisted/build
 
 # Utility rule file for install-RuntimeAddrPass-stripped.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/cc/compiler_assisted/build
 include passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/progress.make
 
 passes/CMakeFiles/install-RuntimeAddrPass-stripped:
-	cd /home/cc/compiler_assisted/build/passes && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="RuntimeAddrPass" -DCMAKE_INSTALL_DO_STRIP=1 -P /home/cc/compiler_assisted/build/cmake_install.cmake
+	cd /mnt/newdrive/compiler_assisted/build/passes && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="RuntimeAddrPass" -DCMAKE_INSTALL_DO_STRIP=1 -P /mnt/newdrive/compiler_assisted/build/cmake_install.cmake
 
 install-RuntimeAddrPass-stripped: passes/CMakeFiles/install-RuntimeAddrPass-stripped
 install-RuntimeAddrPass-stripped: passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build.make
@@ -67,10 +67,10 @@ passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build: install-RuntimeAdd
 .PHONY : passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build
 
 passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/clean:
-	cd /home/cc/compiler_assisted/build/passes && $(CMAKE_COMMAND) -P CMakeFiles/install-RuntimeAddrPass-stripped.dir/cmake_clean.cmake
+	cd /mnt/newdrive/compiler_assisted/build/passes && $(CMAKE_COMMAND) -P CMakeFiles/install-RuntimeAddrPass-stripped.dir/cmake_clean.cmake
 .PHONY : passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/clean
 
 passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/depend:
-	cd /home/cc/compiler_assisted/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cc/compiler_assisted /home/cc/compiler_assisted/passes /home/cc/compiler_assisted/build /home/cc/compiler_assisted/build/passes /home/cc/compiler_assisted/build/passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/DependInfo.cmake --color=$(COLOR)
+	cd /mnt/newdrive/compiler_assisted/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/newdrive/compiler_assisted /mnt/newdrive/compiler_assisted/passes /mnt/newdrive/compiler_assisted/build /mnt/newdrive/compiler_assisted/build/passes /mnt/newdrive/compiler_assisted/build/passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/depend
 

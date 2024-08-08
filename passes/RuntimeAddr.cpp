@@ -6,9 +6,12 @@
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Transforms/Utils/ModuleUtils.h"
+#include "llvm/Demangle/Demangle.h"
+#include <unordered_set>
+#include <vector>
 
 using namespace llvm;
-int func_call_num = 0;
+int instru_num = 0;
 
 #define DEBUG_TYPE "runtime-addr-cc"
 DataLayout TD = DataLayout(llvm::StringRef());
@@ -20,7 +23,7 @@ FunctionCallee logFunc;
 
 bool RuntimeAddr::runOnModule(Module &M) {}
 
-void track_mem_access(Instruction *I)
+void track_mem_access(Instruction *I, Function *F)
 {
   bool is_write = false;
   uint32_t access_size = 0;
@@ -57,9 +60,111 @@ void track_mem_access(Instruction *I)
   builder.SetInsertPoint(instr);
   Value *access_size_val = builder.getInt32(access_size);
   builder.CreateCall(logFunc, {addr, access_size_val});
-  func_call_num++;
+  errs() << "instrumented: " << std::string(F->getName()) << "\n";
+  instru_num++;
+}
+int analyzeFunction_demangle(Function &F)
+{
+  // for (BasicBlock &BB : F)
+  // {
+  //   for (Instruction &I : BB)
+  //   {
+  //     if (CallInst *callInst = dyn_cast<CallInst>(&I))
+  //     {
+  //       if (Function *calledFunction = callInst->getCalledFunction())
+  //       {
+  std::string mangledName = F.getName().str();
+  const char *mangledNameChar = mangledName.c_str();
+  // int status = 0;
+  // char *demangledName = llvm::itaniumDemangle(mangledName.c_str(), nullptr, nullptr, &status);
+  // if (status == 0)
+  // {
+  //   errs() << "Function " << F.getName() << " calls function " << demangledName << "\n";
+  //   free(demangledName);
+  // }
+  // else
+  // {
+  //   errs() << "Function " << F.getName() << " calls function " << mangledName << "\n";
+  // }
+  size_t Size = 1;
+  char *Buf = static_cast<char *>(std::malloc(Size));
+
+  llvm::ItaniumPartialDemangler Mangler;
+  if (Mangler.partialDemangle(mangledNameChar))
+  {
+    errs() << "Failed to demangle: " << mangledName << "\n";
+    return 1;
+  }
+
+  // char *Result_base = Mangler.getFunctionBaseName(Buf, &Size);
+  char *Result_func = Mangler.getFunctionName(Buf, &Size);
+
+  // errs() << "Basename: " << Result_base << "\n";
+  errs() << " Funcname: " << Result_func << "\n";
+  //       }
+  //     }
+  //   }
+  // }
+  return 0;
+}
+int analyzeFunction_direct(Function &F)
+{
+  for (BasicBlock &BB : F)
+  {
+    for (Instruction &I : BB)
+    {
+      if (CallInst *callInst = dyn_cast<CallInst>(&I))
+      {
+        if (Function *calledFunction = callInst->getCalledFunction())
+        {
+          return 1;
+          // errs() << "Function " << F.getName()
+          //        << " directly function " << calledFunction->getName() << "\n";
+        }
+      }
+    }
+  }
+  return 0;
 }
 
+int analyzeFunction(Function &F)
+{
+  std::unordered_set<Function *> visited;
+  std::vector<Function *> worklist;
+  worklist.push_back(&F);
+
+  while (!worklist.empty())
+  {
+    Function *currentFunc = worklist.back();
+    worklist.pop_back();
+
+    // If we've already visited this function, skip it
+    if (!visited.insert(currentFunc).second)
+      continue;
+
+    // Analyze all call instructions within the current function
+    for (BasicBlock &BB : *currentFunc)
+    {
+      for (Instruction &I : BB)
+      {
+        if (CallInst *callInst = dyn_cast<CallInst>(&I))
+        {
+          if (Function *calledFunction = callInst->getCalledFunction())
+          {
+            if (visited.find(calledFunction) == visited.end())
+            {
+              worklist.push_back(calledFunction);
+              errs() << "Function " << currentFunc->getName()
+                     << " calls function " << calledFunction->getName() << "\n";
+              return 1;
+            }
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
 PreservedAnalyses RuntimeAddr::run(llvm::Module &M,
                                    llvm::ModuleAnalysisManager &)
 {
@@ -68,18 +173,78 @@ PreservedAnalyses RuntimeAddr::run(llvm::Module &M,
   retType = Type::getVoidTy(*Ctx);
   getInt32Type = Type::getInt32Ty(*Ctx);
   logFuncType = FunctionType::get(retType, {getInt32Type, getInt32Type}, false);
+  // std::string exclude_generator = "generator";
+  // std::string exclude_make_graph = "make_graph";
+  // if (std::string(M.getName()).find(exclude_generator) != std::string::npos ||
+  //     std::string(M.getName()).find(exclude_make_graph) != std::string::npos)
+  // {
+  //   return PreservedAnalyses::all();
+  // }
+  errs() << "Inspecting module: " << M.getName() << "\n";
   for (auto &F : M.functions())
   {
-    // func_call_num = 0;
-    logFunc = M.getOrInsertFunction("populate_shared_mem", logFuncType);
-    std::string exclude_func_0 = "printf";
-    std::string exclude_func_1 = "main";
-    if (std::string(F.getName()).find(exclude_func_0) != std::string::npos ||
-        std::string(F.getName()).find(exclude_func_1) != std::string::npos)
-    {
+    // enable this to XSBench
+    // if (std::string(F.getName()).find("grid_init_do_not_profile") != std::string::npos)
+    // {
+    //   if (analyzeFunction_direct(F))
+    //     continue;
+    // }
+    // enable this to gapbs-pr
+    if (analyzeFunction_demangle(F))
       continue;
+    if (F.isDeclaration())
+    {
+      errs() << "external func name: " << F.getName() << "\n";
+      //   continue;
     }
-    errs() << "instrumenting: " << std::string(F.getName()) << "\n";
+    // instru_num = 0;
+    logFunc = M.getOrInsertFunction("populate_shared_mem", logFuncType);
+    std::string exclude_main = "main";
+    std::string exclude_pass_start = "shared_mem_start";
+    std::string exclude_pass_end = "shared_mem_end";
+    std::string exclude_omp = "omp";
+    std::string exclude_clone = "clone";
+    std::string exclude_thread = "start_thread";
+    std::string exclude_alloc = "alloc";
+    std::string exclude_rtlib = "populate_shared_mem";
+    std::string exclude_weird_0 = "mrg_step";
+    std::string exclude_weird_1 = "mrg_orig_step";
+    std::string exclude_weird_2 = "generate_kronecker_range";
+    std::string exclude_weird_3 = "mrg";
+    std::string exclude_weird_4 = "make_graph";
+    std::string exclude_gnu = "gnu";
+    std::string exclude_vector = "vector";
+    std::string exclude_std = "std::";
+    std::string exclude_mersenne = "mersenne";
+    std::string target_func = "launch_bench";
+    // if (std::string(F.getName()).find(exclude_func_0) != std::string::npos ||
+    //     std::string(F.getName()).find(exclude_func_1) != std::string::npos)
+    // {
+    //   continue;
+    // }
+    // if (std::string(F.getName()).find(target_func) == std::string::npos)
+    // {
+    //   continue;
+    // }
+    if (std::string(F.getName()).find(exclude_main) != std::string::npos ||
+        std::string(F.getName()).find(exclude_omp) != std::string::npos ||
+        std::string(F.getName()).find(exclude_pass_start) != std::string::npos ||
+        std::string(F.getName()).find(exclude_rtlib) != std::string::npos ||
+        std::string(F.getName()).find(exclude_gnu) != std::string::npos ||
+        std::string(F.getName()).find(exclude_vector) != std::string::npos ||
+        std::string(F.getName()).find(exclude_std) != std::string::npos ||
+        std::string(F.getName()).find(exclude_mersenne) != std::string::npos ||
+        // std::string(F.getName()).find(exclude_thread) != std::string::npos ||
+        // std::string(F.getName()).find(exclude_alloc) != std::string::npos ||
+        // std::string(F.getName()).find(exclude_weird_0) != std::string::npos ||
+        // std::string(F.getName()).find(exclude_weird_1) != std::string::npos ||
+        // std::string(F.getName()).find(exclude_weird_2) != std::string::npos ||
+        // std::string(F.getName()).find(exclude_weird_3) != std::string::npos ||
+        // std::string(F.getName()).find(exclude_weird_4) != std::string::npos ||
+        std::string(F.getName()).find(exclude_pass_end) != std::string::npos)
+      continue;
+
+    // errs() << "instrumenting: " << std::string(F.getName()) << "\n";
     for (auto &B : F)
     {
       for (auto &I : B)
@@ -142,15 +307,14 @@ PreservedAnalyses RuntimeAddr::run(llvm::Module &M,
         // }
         if (isa<AllocaInst>(&I) ||
             isa<GlobalVariable>(&I))
-        { // TODO: double check if correct
-          // errs() << "stack or global obj, skipping" << "\n";
+        {
           continue;
         }
-        track_mem_access(&I);
+        track_mem_access(&I, &F);
       }
     }
   }
-  errs() << "func_call_num: " << func_call_num << "\n";
+  errs() << "instru_num: " << instru_num << "\n";
   return PreservedAnalyses::none();
 }
 

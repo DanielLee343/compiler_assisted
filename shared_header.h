@@ -9,6 +9,7 @@
 #include <err.h>
 #include <time.h>
 #include <stdbool.h>
+#include <pthread.h>
 
 #define DEVICE_PATH "/dev/my_char_device"
 #define BUFFER_SIZE 4096
@@ -19,7 +20,8 @@
 int syscall_shared_mem_start = 451;
 int syscall_shared_mem_end = 452;
 unsigned long *shared_mem;
-int *buffer_index;
+// int *buffer_index;
+__thread int *buffer_index;
 bool *buffer_is_ready;
 static inline long shared_mem_start(pid_t pid)
 {

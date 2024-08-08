@@ -3,6 +3,7 @@
 extern void populate_shared_mem(void *addr, int size);
 
 void launch_bench();
+void run_bench();
 int main(int argc, char **argv)
 {
     int state;
@@ -41,13 +42,20 @@ int main(int argc, char **argv)
 
 void launch_bench()
 {
+    run_bench();
+}
+
+void run_bench()
+{
     int *a_mem = malloc(8 * sizeof(int));
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 50; i++)
     {
         // printf("i's address: %p\n", &i);
         // populate_shared_mem(&a_mem[i], sizeof(int));
         // printf("buffer_index: %d\n", *buffer_index);
         a_mem[i] = i * 123;
+        // if (i != 49)
+        //     a_mem[i + 1] = a_mem[i] * a_mem[i];
         // printf("runtime addr: %p\n", &a_mem[i]);
         usleep(50 * 1000);
     }

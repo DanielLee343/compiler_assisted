@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cc/compiler_assisted
+CMAKE_SOURCE_DIR = /mnt/newdrive/compiler_assisted
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cc/compiler_assisted/build
+CMAKE_BINARY_DIR = /mnt/newdrive/compiler_assisted/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/cc/compiler_assisted/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/cc/compiler_assisted/build/CMakeFiles /home/cc/compiler_assisted/build/passes/CMakeFiles/progress.marks
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/compiler_assisted/build/CMakeFiles 0
+	cd /mnt/newdrive/compiler_assisted/build && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles /mnt/newdrive/compiler_assisted/build/passes/CMakeFiles/progress.marks
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/clean
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/preinstall
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/preinstall
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/cc/compiler_assisted/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /mnt/newdrive/compiler_assisted/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/rule:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/rule
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/rule
 .PHONY : passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/rule
 
 # Convenience name for target.
@@ -168,12 +168,12 @@ install-RuntimeAddrPass-stripped: passes/CMakeFiles/install-RuntimeAddrPass-stri
 
 # fast build rule for target.
 install-RuntimeAddrPass-stripped/fast:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build.make passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build.make passes/CMakeFiles/install-RuntimeAddrPass-stripped.dir/build
 .PHONY : install-RuntimeAddrPass-stripped/fast
 
 # Convenience name for target.
 passes/CMakeFiles/install-RuntimeAddrPass.dir/rule:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/CMakeFiles/install-RuntimeAddrPass.dir/rule
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/CMakeFiles/install-RuntimeAddrPass.dir/rule
 .PHONY : passes/CMakeFiles/install-RuntimeAddrPass.dir/rule
 
 # Convenience name for target.
@@ -183,12 +183,12 @@ install-RuntimeAddrPass: passes/CMakeFiles/install-RuntimeAddrPass.dir/rule
 
 # fast build rule for target.
 install-RuntimeAddrPass/fast:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/install-RuntimeAddrPass.dir/build.make passes/CMakeFiles/install-RuntimeAddrPass.dir/build
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/install-RuntimeAddrPass.dir/build.make passes/CMakeFiles/install-RuntimeAddrPass.dir/build
 .PHONY : install-RuntimeAddrPass/fast
 
 # Convenience name for target.
 passes/CMakeFiles/RuntimeAddrPass.dir/rule:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/CMakeFiles/RuntimeAddrPass.dir/rule
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f CMakeFiles/Makefile2 passes/CMakeFiles/RuntimeAddrPass.dir/rule
 .PHONY : passes/CMakeFiles/RuntimeAddrPass.dir/rule
 
 # Convenience name for target.
@@ -198,7 +198,7 @@ RuntimeAddrPass: passes/CMakeFiles/RuntimeAddrPass.dir/rule
 
 # fast build rule for target.
 RuntimeAddrPass/fast:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/build
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/build
 .PHONY : RuntimeAddrPass/fast
 
 RuntimeAddr.o: RuntimeAddr.cpp.o
@@ -207,7 +207,7 @@ RuntimeAddr.o: RuntimeAddr.cpp.o
 
 # target to build an object file
 RuntimeAddr.cpp.o:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.o
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.o
 .PHONY : RuntimeAddr.cpp.o
 
 RuntimeAddr.i: RuntimeAddr.cpp.i
@@ -216,7 +216,7 @@ RuntimeAddr.i: RuntimeAddr.cpp.i
 
 # target to preprocess a source file
 RuntimeAddr.cpp.i:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.i
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.i
 .PHONY : RuntimeAddr.cpp.i
 
 RuntimeAddr.s: RuntimeAddr.cpp.s
@@ -225,7 +225,7 @@ RuntimeAddr.s: RuntimeAddr.cpp.s
 
 # target to generate assembly for a file
 RuntimeAddr.cpp.s:
-	cd /home/cc/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.s
+	cd /mnt/newdrive/compiler_assisted/build && $(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/RuntimeAddr.cpp.s
 .PHONY : RuntimeAddr.cpp.s
 
 # Help Target
@@ -257,6 +257,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/cc/compiler_assisted/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /mnt/newdrive/compiler_assisted/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

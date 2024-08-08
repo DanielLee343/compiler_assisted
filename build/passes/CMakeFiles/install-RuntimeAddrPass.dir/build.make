@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cc/compiler_assisted
+CMAKE_SOURCE_DIR = /mnt/newdrive/compiler_assisted
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cc/compiler_assisted/build
+CMAKE_BINARY_DIR = /mnt/newdrive/compiler_assisted/build
 
 # Utility rule file for install-RuntimeAddrPass.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/cc/compiler_assisted/build
 include passes/CMakeFiles/install-RuntimeAddrPass.dir/progress.make
 
 passes/CMakeFiles/install-RuntimeAddrPass:
-	cd /home/cc/compiler_assisted/build/passes && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="RuntimeAddrPass" -P /home/cc/compiler_assisted/build/cmake_install.cmake
+	cd /mnt/newdrive/compiler_assisted/build/passes && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="RuntimeAddrPass" -P /mnt/newdrive/compiler_assisted/build/cmake_install.cmake
 
 install-RuntimeAddrPass: passes/CMakeFiles/install-RuntimeAddrPass
 install-RuntimeAddrPass: passes/CMakeFiles/install-RuntimeAddrPass.dir/build.make
@@ -67,10 +67,10 @@ passes/CMakeFiles/install-RuntimeAddrPass.dir/build: install-RuntimeAddrPass
 .PHONY : passes/CMakeFiles/install-RuntimeAddrPass.dir/build
 
 passes/CMakeFiles/install-RuntimeAddrPass.dir/clean:
-	cd /home/cc/compiler_assisted/build/passes && $(CMAKE_COMMAND) -P CMakeFiles/install-RuntimeAddrPass.dir/cmake_clean.cmake
+	cd /mnt/newdrive/compiler_assisted/build/passes && $(CMAKE_COMMAND) -P CMakeFiles/install-RuntimeAddrPass.dir/cmake_clean.cmake
 .PHONY : passes/CMakeFiles/install-RuntimeAddrPass.dir/clean
 
 passes/CMakeFiles/install-RuntimeAddrPass.dir/depend:
-	cd /home/cc/compiler_assisted/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cc/compiler_assisted /home/cc/compiler_assisted/passes /home/cc/compiler_assisted/build /home/cc/compiler_assisted/build/passes /home/cc/compiler_assisted/build/passes/CMakeFiles/install-RuntimeAddrPass.dir/DependInfo.cmake --color=$(COLOR)
+	cd /mnt/newdrive/compiler_assisted/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/newdrive/compiler_assisted /mnt/newdrive/compiler_assisted/passes /mnt/newdrive/compiler_assisted/build /mnt/newdrive/compiler_assisted/build/passes /mnt/newdrive/compiler_assisted/build/passes/CMakeFiles/install-RuntimeAddrPass.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : passes/CMakeFiles/install-RuntimeAddrPass.dir/depend
 

@@ -1,4 +1,4 @@
-# Install script for directory: /home/cc/compiler_assisted
+# Install script for directory: /mnt/newdrive/compiler_assisted
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/cc/compiler_assisted/build/passes/cmake_install.cmake")
+  include("/mnt/newdrive/compiler_assisted/build/passes/cmake_install.cmake")
 
 endif()
 
@@ -51,5 +51,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/cc/compiler_assisted/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/newdrive/compiler_assisted/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
