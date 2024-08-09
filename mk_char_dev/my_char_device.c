@@ -8,7 +8,8 @@
 #include <linux/io.h>
 
 #define DEVICE_NAME "my_char_device"
-#define DEVICE_SIZE 4096 // 4 KB device memory
+#define DEVICE_SIZE 4096
+// 2M: 2097152 slower
 
 static dev_t dev_number;
 static struct cdev my_cdev;

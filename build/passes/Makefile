@@ -105,7 +105,7 @@ install/fast: preinstall/fast
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"RuntimeAddrPass\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"RuntimeAddrPass\" \"RuntimeAddrPassPr\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components

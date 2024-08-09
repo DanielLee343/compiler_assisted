@@ -54,11 +54,13 @@ CMAKE_BINARY_DIR = /mnt/newdrive/compiler_assisted/build
 
 # The main recursive "all" target.
 all: passes/all
+all: passes_pr/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: passes/preinstall
+preinstall: passes_pr/preinstall
 
 .PHONY : preinstall
 
@@ -68,6 +70,7 @@ clean: CMakeFiles/acc_gen.dir/clean
 clean: CMakeFiles/omp_gen.dir/clean
 clean: CMakeFiles/intrinsics_gen.dir/clean
 clean: passes/clean
+clean: passes_pr/clean
 
 .PHONY : clean
 
@@ -90,6 +93,26 @@ passes/clean: passes/CMakeFiles/install-RuntimeAddrPass.dir/clean
 passes/clean: passes/CMakeFiles/RuntimeAddrPass.dir/clean
 
 .PHONY : passes/clean
+
+#=============================================================================
+# Directory level rules for directory passes_pr
+
+# Recursive "all" directory target.
+passes_pr/all: passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/all
+
+.PHONY : passes_pr/all
+
+# Recursive "preinstall" directory target.
+passes_pr/preinstall:
+
+.PHONY : passes_pr/preinstall
+
+# Recursive "clean" directory target.
+passes_pr/clean: passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/clean
+passes_pr/clean: passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/clean
+passes_pr/clean: passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/clean
+
+.PHONY : passes_pr/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/RISCVTargetParserTableGen.dir
@@ -279,6 +302,87 @@ RuntimeAddrPass: passes/CMakeFiles/RuntimeAddrPass.dir/rule
 passes/CMakeFiles/RuntimeAddrPass.dir/clean:
 	$(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/clean
 .PHONY : passes/CMakeFiles/RuntimeAddrPass.dir/clean
+
+#=============================================================================
+# Target rules for target passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir
+
+# All Build rule for target.
+passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/all: passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/all
+	$(MAKE) -f passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/build.make passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/depend
+	$(MAKE) -f passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/build.make passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/newdrive/compiler_assisted/build/CMakeFiles --progress-num= "Built target install-RuntimeAddrPassPr-stripped"
+.PHONY : passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/all
+
+# Build rule for subdir invocation for target.
+passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles 0
+.PHONY : passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/rule
+
+# Convenience name for target.
+install-RuntimeAddrPassPr-stripped: passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/rule
+
+.PHONY : install-RuntimeAddrPassPr-stripped
+
+# clean rule for target.
+passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/clean:
+	$(MAKE) -f passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/build.make passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/clean
+.PHONY : passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/clean
+
+#=============================================================================
+# Target rules for target passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir
+
+# All Build rule for target.
+passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/all: passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/all
+	$(MAKE) -f passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/build.make passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/depend
+	$(MAKE) -f passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/build.make passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/newdrive/compiler_assisted/build/CMakeFiles --progress-num= "Built target install-RuntimeAddrPassPr"
+.PHONY : passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/all
+
+# Build rule for subdir invocation for target.
+passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles 0
+.PHONY : passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/rule
+
+# Convenience name for target.
+install-RuntimeAddrPassPr: passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/rule
+
+.PHONY : install-RuntimeAddrPassPr
+
+# clean rule for target.
+passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/clean:
+	$(MAKE) -f passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/build.make passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/clean
+.PHONY : passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/clean
+
+#=============================================================================
+# Target rules for target passes_pr/CMakeFiles/RuntimeAddrPassPr.dir
+
+# All Build rule for target.
+passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/all:
+	$(MAKE) -f passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/build.make passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/depend
+	$(MAKE) -f passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/build.make passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/newdrive/compiler_assisted/build/CMakeFiles --progress-num=3,4 "Built target RuntimeAddrPassPr"
+.PHONY : passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/all
+
+# Build rule for subdir invocation for target.
+passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/newdrive/compiler_assisted/build/CMakeFiles 0
+.PHONY : passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/rule
+
+# Convenience name for target.
+RuntimeAddrPassPr: passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/rule
+
+.PHONY : RuntimeAddrPassPr
+
+# clean rule for target.
+passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/clean:
+	$(MAKE) -f passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/build.make passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/clean
+.PHONY : passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -1,3 +1,5 @@
 # Hashes of file build rules.
 651c69949e1f3f56be8687c567696590 passes/CMakeFiles/install-RuntimeAddrPass
 e811d75826f6647aea58f3839f8bca19 passes/CMakeFiles/install-RuntimeAddrPass-stripped
+8a7f2aabcfd0a93438e352ed01c7b5e9 passes_pr/CMakeFiles/install-RuntimeAddrPassPr
+6070c8c208997fcf91e06aab2ce43f51 passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped

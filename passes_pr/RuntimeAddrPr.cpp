@@ -1,5 +1,3 @@
-// #include "RuntimeAddr.h"
-
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/IR/LLVMContext.h" // Include this header for LLVMContext
 #include "llvm/IR/Type.h"        // Include this header for Type
@@ -9,13 +7,11 @@
 #include "llvm/Demangle/Demangle.h"
 #include "llvm/IR/PassManager.h"
 #include "llvm/Pass.h"
-#include <unordered_set>
-#include <vector>
 
 using namespace llvm;
 int instru_num = 0;
 
-#define DEBUG_TYPE "runtime-addr-cc"
+#define DEBUG_TYPE "runtime-addr-pr"
 DataLayout TD = DataLayout(llvm::StringRef());
 LLVMContext *Ctx;
 Type *retType;
@@ -37,7 +33,7 @@ int analyzeFunction_demangle(Function &F)
     return 1;
   }
   char *Result_func = Mangler.getFunctionName(Buf, &Size);
-  errs() << " Funcname: " << Result_func << "\n";
+  errs() << " Funcname: " << Result_func << " org: " << F.getName() << "\n";
   return 0;
 }
 
@@ -129,8 +125,8 @@ struct RuntimeAddr : public llvm::PassInfoMixin<RuntimeAddr>
       //     continue;
       // }
       // enable this to gapbs-pr
-      if (analyzeFunction_demangle(F))
-        continue;
+      // if (analyzeFunction_demangle(F))
+      //   continue;
       if (F.isDeclaration())
       {
         errs() << "external func name: " << F.getName() << "\n";
@@ -156,94 +152,24 @@ struct RuntimeAddr : public llvm::PassInfoMixin<RuntimeAddr>
       std::string exclude_std = "std::";
       std::string exclude_mersenne = "mersenne";
       std::string target_func = "launch_bench";
-      // if (std::string(F.getName()).find(exclude_func_0) != std::string::npos ||
-      //     std::string(F.getName()).find(exclude_func_1) != std::string::npos)
-      // {
-      //   continue;
-      // }
-      // if (std::string(F.getName()).find(target_func) == std::string::npos)
-      // {
-      //   continue;
-      // }
-      if (std::string(F.getName()).find(exclude_main) != std::string::npos ||
-          std::string(F.getName()).find(exclude_omp) != std::string::npos ||
-          std::string(F.getName()).find(exclude_pass_start) != std::string::npos ||
-          std::string(F.getName()).find(exclude_rtlib) != std::string::npos ||
-          std::string(F.getName()).find(exclude_gnu) != std::string::npos ||
-          std::string(F.getName()).find(exclude_vector) != std::string::npos ||
-          std::string(F.getName()).find(exclude_std) != std::string::npos ||
-          std::string(F.getName()).find(exclude_mersenne) != std::string::npos ||
-          // std::string(F.getName()).find(exclude_thread) != std::string::npos ||
-          // std::string(F.getName()).find(exclude_alloc) != std::string::npos ||
-          // std::string(F.getName()).find(exclude_weird_0) != std::string::npos ||
-          // std::string(F.getName()).find(exclude_weird_1) != std::string::npos ||
-          // std::string(F.getName()).find(exclude_weird_2) != std::string::npos ||
-          // std::string(F.getName()).find(exclude_weird_3) != std::string::npos ||
-          // std::string(F.getName()).find(exclude_weird_4) != std::string::npos ||
-          std::string(F.getName()).find(exclude_pass_end) != std::string::npos)
+      // if (std::string(F.getName()).find(exclude_main) != std::string::npos ||
+      //     std::string(F.getName()).find(exclude_pass_start) != std::string::npos ||
+      //     std::string(F.getName()).find(exclude_rtlib) != std::string::npos ||
+      //     std::string(F.getName()).find(exclude_gnu) != std::string::npos ||
+      //     std::string(F.getName()).find(exclude_vector) != std::string::npos ||
+      //     std::string(F.getName()).find(exclude_std) != std::string::npos ||
+      //     std::string(F.getName()).find(exclude_mersenne) != std::string::npos ||
+      //     std::string(F.getName()).find(exclude_pass_end) != std::string::npos)
+      if (std::string(F.getName()).find("PageRankPullGS") == std::string::npos &&
+          std::string(F.getName()).find("fabs") == std::string::npos &&
+          std::string(F.getName()).find("in_degree") == std::string::npos &&
+          std::string(F.getName()).find("out_degree") == std::string::npos)
         continue;
 
-      // errs() << "instrumenting: " << std::string(F.getName()) << "\n";
       for (auto &B : F)
       {
         for (auto &I : B)
         {
-          // if (CallInst *callInst = dyn_cast<CallInst>(&I))
-          // {
-          //   Function *calledFunction = callInst->getCalledFunction();
-          //   if (calledFunction && calledFunction->getName() == "malloc")
-          //   {
-          //     errs() << "Found dynamic memory allocation: " << *callInst << "\n";
-          //     if (BitCastInst *bitcastInst = dyn_cast<BitCastInst>(callInst->getNextNode()))
-          //     {
-          //       for (auto *U : bitcastInst->users())
-          //       {
-          //         if (LoadInst *loadInst = dyn_cast<LoadInst>(U))
-          //         {
-          //           errs() << "  Used in load: " << *loadInst << "\n";
-          //         }
-          //         else if (StoreInst *storeInst = dyn_cast<StoreInst>(U))
-          //         {
-          //           errs() << "  Used in store: " << *storeInst << "\n";
-          //         }
-          //       }
-          //     }
-          //   }
-          // }
-          // if (CallInst *callInst = dyn_cast<CallInst>(&I))
-          // {
-          //   Function *calledFunction = callInst->getCalledFunction();
-          //   if (calledFunction && calledFunction->getName() == "malloc")
-          //   {
-          //     errs() << "Found dynamic memory allocation: " << *callInst << "\n";
-          //     for (auto *U : callInst->users())
-          //     {
-          //       if (BitCastInst *bitcastInst = dyn_cast<BitCastInst>(U))
-          //       {
-          //         // Follow the bitcast instruction uses
-          //         for (auto *U2 : bitcastInst->users())
-          //         {
-          //           if (StoreInst *storeInst = dyn_cast<StoreInst>(U2))
-          //           {
-          //             errs() << "  Malloc result stored: " << *storeInst << "\n";
-          //           }
-          //           else if (LoadInst *loadInst = dyn_cast<LoadInst>(U2))
-          //           {
-          //             errs() << "  Malloc result loaded: " << *loadInst << "\n";
-          //           }
-          //         }
-          //       }
-          //       else if (StoreInst *storeInst = dyn_cast<StoreInst>(U))
-          //       {
-          //         errs() << "  Malloc result stored directly: " << *storeInst << "\n";
-          //       }
-          //       else if (LoadInst *loadInst = dyn_cast<LoadInst>(U))
-          //       {
-          //         errs() << "  Malloc result loaded directly: " << *loadInst << "\n";
-          //       }
-          //     }
-          //   }
-          // }
           if (isa<AllocaInst>(&I) ||
               isa<GlobalVariable>(&I))
           {
@@ -261,7 +187,7 @@ extern "C" LLVM_ATTRIBUTE_WEAK ::llvm::PassPluginLibraryInfo
 llvmGetPassPluginInfo()
 {
   return {.APIVersion = LLVM_PLUGIN_API_VERSION,
-          .PluginName = "runtime-addr-cc",
+          .PluginName = "runtime-addr-pr",
           .PluginVersion = "v0.1",
           .RegisterPassBuilderCallbacks = [](PassBuilder &PB)
           {

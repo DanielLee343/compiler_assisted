@@ -13,6 +13,7 @@
 
 #define DEVICE_PATH "/dev/my_char_device"
 #define BUFFER_SIZE 4096
+// 2M: 2097152 slower
 #define NUM_SLOTS (BUFFER_SIZE / 8)
 #define NUM_ADDRESSES 10 // for testing
 #define COPIES 64

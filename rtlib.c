@@ -7,8 +7,8 @@
 void populate_shared_mem(void *addr, int size)
 {
     // printf("captured addr: %p, size: %d\n", addr, size);
-
-    // printf("shared mem in lib: %p\n", shared_mem);
+    if (buffer_index == NULL)
+        return;
     shared_mem[*buffer_index] = (unsigned long)addr;
     (*buffer_index)++;
     // printf("buffer_index: %d\n", *buffer_index);

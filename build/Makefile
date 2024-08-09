@@ -82,7 +82,7 @@ install/fast: preinstall/fast
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"RuntimeAddrPass\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"RuntimeAddrPass\" \"RuntimeAddrPassPr\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -247,6 +247,45 @@ RuntimeAddrPass/fast:
 	$(MAKE) -f passes/CMakeFiles/RuntimeAddrPass.dir/build.make passes/CMakeFiles/RuntimeAddrPass.dir/build
 .PHONY : RuntimeAddrPass/fast
 
+#=============================================================================
+# Target rules for targets named install-RuntimeAddrPassPr-stripped
+
+# Build rule for target.
+install-RuntimeAddrPassPr-stripped: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 install-RuntimeAddrPassPr-stripped
+.PHONY : install-RuntimeAddrPassPr-stripped
+
+# fast build rule for target.
+install-RuntimeAddrPassPr-stripped/fast:
+	$(MAKE) -f passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/build.make passes_pr/CMakeFiles/install-RuntimeAddrPassPr-stripped.dir/build
+.PHONY : install-RuntimeAddrPassPr-stripped/fast
+
+#=============================================================================
+# Target rules for targets named install-RuntimeAddrPassPr
+
+# Build rule for target.
+install-RuntimeAddrPassPr: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 install-RuntimeAddrPassPr
+.PHONY : install-RuntimeAddrPassPr
+
+# fast build rule for target.
+install-RuntimeAddrPassPr/fast:
+	$(MAKE) -f passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/build.make passes_pr/CMakeFiles/install-RuntimeAddrPassPr.dir/build
+.PHONY : install-RuntimeAddrPassPr/fast
+
+#=============================================================================
+# Target rules for targets named RuntimeAddrPassPr
+
+# Build rule for target.
+RuntimeAddrPassPr: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RuntimeAddrPassPr
+.PHONY : RuntimeAddrPassPr
+
+# fast build rule for target.
+RuntimeAddrPassPr/fast:
+	$(MAKE) -f passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/build.make passes_pr/CMakeFiles/RuntimeAddrPassPr.dir/build
+.PHONY : RuntimeAddrPassPr/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -266,6 +305,9 @@ help:
 	@echo "... install-RuntimeAddrPass-stripped"
 	@echo "... install-RuntimeAddrPass"
 	@echo "... RuntimeAddrPass"
+	@echo "... install-RuntimeAddrPassPr-stripped"
+	@echo "... install-RuntimeAddrPassPr"
+	@echo "... RuntimeAddrPassPr"
 .PHONY : help
 
 
