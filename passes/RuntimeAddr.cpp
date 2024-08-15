@@ -33,11 +33,11 @@ int analyzeFunction_demangle(Function &F)
   llvm::ItaniumPartialDemangler Mangler;
   if (Mangler.partialDemangle(mangledNameChar))
   {
-    errs() << "Failed to demangle: " << mangledName << "\n";
+    //errs() << "Failed to demangle: " << mangledName << "\n";
     return 1;
   }
   char *Result_func = Mangler.getFunctionName(Buf, &Size);
-  errs() << " Funcname: " << Result_func << "\n";
+  // errs() << " Funcname: " << Result_func << "\n";
   return 0;
 }
 
@@ -123,17 +123,16 @@ struct RuntimeAddr : public llvm::PassInfoMixin<RuntimeAddr>
     for (auto &F : M.functions())
     {
       // enable this to XSBench
-      // if (std::string(F.getName()).find("grid_init_do_not_profile") != std::string::npos)
-      // {
-      //   if (analyzeFunction_direct(F))
-      //     continue;
-      // }
+       if (std::string(F.getName()).find("grid_init_do_not_profile") != std::string::npos)
+       {
+           continue;
+       }
       // enable this to gapbs-pr
-      if (analyzeFunction_demangle(F))
-        continue;
+      // if (analyzeFunction_demangle(F))
+       //  continue;
       if (F.isDeclaration())
       {
-        errs() << "external func name: " << F.getName() << "\n";
+        //errs() << "external func name: " << F.getName() << "\n";
         //   continue;
       }
       // instru_num = 0;
